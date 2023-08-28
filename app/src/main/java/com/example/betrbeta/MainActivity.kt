@@ -4,6 +4,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardActions.Companion.Default
@@ -33,19 +34,11 @@ fun GroupedApps(apps: List<App>, groupName: String) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .background(Color.Red)
+            .background(Color(0,0,0,40), RoundedCornerShape(16.dp))
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = groupName,
-            fontSize = 20.sp,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-
         LazyColumn {
             items(apps.size) { index ->
                 val app = apps[index]
@@ -77,11 +70,40 @@ fun GroupedApps(apps: List<App>, groupName: String) {
 
 @Composable
 fun GroupedAppsList(appsGroup1: List<App>, appsGroup2: List<App>) {
-    Column {
-        GroupedApps(apps = appsGroup1, groupName = "Tools")
-        GroupedApps(apps = appsGroup2, groupName = "Games")
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth()
+        .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            GroupedApps(apps = appsGroup1, groupName = "Tools")
+            Text(
+                text = "Tools", // Add label text here
+                fontSize = 20.sp,
+                color = Color.White, // Customize the color
+                modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 4.dp)
+            )
+        }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            GroupedApps(apps = appsGroup2, groupName = "Games")
+            Text(
+                text = "Games", // Add label text here
+                fontSize = 20.sp,
+                color = Color.White, // Customize the color
+                modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 4.dp)
+            )
+        }
     }
 }
+
 @Preview
 @Composable
 fun AppScreen() {
