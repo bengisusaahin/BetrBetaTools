@@ -26,8 +26,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+/*In our code, we define the App class to represent individual apps.
+It has two properties: name and genre.*/
 data class App(val name: String, val genre: String)
 
+/*It takes a list of apps and a group name as parameters.
+This composable creates a visually appealing layout for the app icons, grouped by three in a row.
+The composable allows for customization of the app icons, including their appearance and size.
+You can replace the placeholder icon with actual app icons.*/
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun GroupedApps(apps: List<App>, groupName: String) {
@@ -40,8 +46,12 @@ fun GroupedApps(apps: List<App>, groupName: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        /*We use a LazyColumn to display these grouped app icons efficiently.
+        Each row of icons is represented by a Row composable.*/
         LazyColumn {
-            val chunkedApps = apps.chunked(3) // Split apps into groups of 3
+            /*We use chunked(3) to split the apps into groups of three.
+            This aids in arranging the icons in rows of three.*/
+            val chunkedApps = apps.chunked(3)
             items(chunkedApps.size) { groupIndex ->
                 val groupApps = chunkedApps[groupIndex]
                 Row(
@@ -73,7 +83,8 @@ fun GroupedApps(apps: List<App>, groupName: String) {
     }
 }
 
-
+/*The GroupedAppsList composable combines multiple groups of apps.
+In our example, we have "Tools" and "Games" groups.*/
 @Composable
 fun GroupedAppsList(appsGroup1: List<App>, appsGroup2: List<App>) {
     Column(modifier = Modifier
@@ -86,6 +97,8 @@ fun GroupedAppsList(appsGroup1: List<App>, appsGroup2: List<App>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            /*Each group is accompanied by a label, making it clear what the group represents.
+            You can customize the label's appearance, such as text color and font size.*/
             GroupedApps(apps = appsGroup1, groupName = "Tools")
             Text(
                 text = "Tools", // Add label text here
@@ -134,6 +147,7 @@ fun AppScreen() {
     GroupedAppsList(appsGroup1, appsGroup2)
 }
 
+/*We wrap our entire app in a MaterialTheme to apply a consistent design system to our UI.*/
 @Composable
 fun App() {
     MaterialTheme {
@@ -141,6 +155,8 @@ fun App() {
     }
 }
 
+/*Finally, in our MainActivity, we set the content to our App composable,
+making it the entry point of our app.*/
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
